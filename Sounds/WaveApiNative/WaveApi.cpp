@@ -2,8 +2,8 @@
 
 #include "WaveApi.h"
 
-UINT waveapi_waveOutOpen(LPHWAVEOUT lphwo, WORD channels, WORD bitsPerSample,
-    DWORD samplesPerSec, WORD formatTag)
+UINT __stdcall waveapi_waveOutOpen(LPHWAVEOUT lphwo, WORD channels, 
+    WORD bitsPerSample, DWORD samplesPerSec, WORD formatTag)
 {
     WAVEFORMATEX    format;
 
@@ -22,8 +22,8 @@ UINT waveapi_waveOutOpen(LPHWAVEOUT lphwo, WORD channels, WORD bitsPerSample,
         &format, NULL, NULL, CALLBACK_FUNCTION);
 }
 
-UINT waveapi_waveOutPrepareHeader(HWAVEOUT hwo, LPWAVEHDR &lpwhdr, LPSTR buffer,
-    DWORD bufferLength)
+UINT __stdcall waveapi_waveOutPrepareHeader(HWAVEOUT hwo, LPWAVEHDR& lpwhdr, 
+    LPSTR buffer, DWORD bufferLength)
 {
     LPWAVEHDR local = (LPWAVEHDR)HeapAlloc(
         GetProcessHeap(), HEAP_ZERO_MEMORY, sizeof(WAVEHDR));
@@ -44,7 +44,7 @@ UINT waveapi_waveOutPrepareHeader(HWAVEOUT hwo, LPWAVEHDR &lpwhdr, LPSTR buffer,
     return result;
 }
 
-UINT waveapi_waveOutWrite(HWAVEOUT hwo, LPWAVEHDR lpwhdr)
+UINT __stdcall waveapi_waveOutWrite(HWAVEOUT hwo, LPWAVEHDR lpwhdr)
 {
     return waveOutWrite(hwo, lpwhdr, sizeof(WAVEHDR));
 }
